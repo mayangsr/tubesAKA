@@ -1,0 +1,82 @@
+#include <iostream>
+
+using namespace std;
+/*I.S. Input array belum terurut
+  F.S. Array sudah terurut menggunakan Cocktail Sort*/
+void cocktailSort(int a[], int dataMax){
+    bool swapped = true;
+    int awal = 0;
+    int akhir = dataMax - 1;
+
+    while (swapped)
+    {
+        //reset flag swapped saat akan
+        //memasuki looping, bisa saja swapped
+        //bernilai true di iterasi sebelumnya
+        swapped = false;
+        //loop dari kiri ke kanan
+        //sama seperti bubble sort
+        for (int i = awal; i <akhir; i++)
+        {
+            if(a[i] > a[i + 1])
+            {
+                swap(a[i], a[i+1]);
+                swapped = true;
+            }
+        }
+        //jika sudah tidak ada yg bertukar
+        //maka, array sudah urut
+        if (!swapped)
+            break;
+        //reset flag swapped, agar bisa
+        //digunakan ke tahap selanjutnya
+        swapped = false;
+
+        //pindahkan titik akhir,karena
+        //nilai maks sudah berada di tempat
+        //yang benar
+        akhir--;
+
+        //melakukan backward loop
+        for (int i = akhir - 1; i >= awal; i--){
+            if (a[i] > a[i+1]){
+                swap(a[i], a[i+1]);
+                swapped = true;
+            }
+        }
+        //pindahkan titik awal, karena
+        //titik awal sudah merupakan angka
+        //terkecil
+        awal++;
+    }
+}
+
+//menampilkan hasil output array terurut
+void printLine(int a[], int dataMax){
+    for (int i = 0; i < dataMax; i++){
+        cout<< a[i] << " ";
+    }
+    cout<< endl;
+}
+
+//user menginput data sebanyak dataMax
+void inputData (int a[], int dataMax){
+    for (int i = 0; i<dataMax ; i++){
+        cout << "data ke- " << i << " : ";
+        cin >> a[i];
+    }
+}
+
+int main(){
+    int dataMax;
+    cout << "Masukkan Jumlah Data Maksimal : ";
+    cin >> dataMax;
+    cout << endl;
+    int a[dataMax];
+    inputData(a, dataMax);
+    cout << endl;
+    cocktailSort(a,dataMax);
+    cout << "Data yang sudah urut : ";
+    printLine(a,dataMax);
+    return 0;
+}
